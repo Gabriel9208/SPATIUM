@@ -1,5 +1,9 @@
 #include "ComputeShader.h"
-#include "../../Utilty/Error.h"
+
+#include <cmath>
+#include <cstdio>
+
+#include <iostream>
 
 const GLchar* ComputeShader::ReadShader(const char* filename)
 {
@@ -46,7 +50,7 @@ GLuint ComputeShader::load(const char* shaderFile)
 		return 0;
 	}
 
-	GLCall(program = glCreateProgram());
+	program = glCreateProgram();
 
 	const GLchar* source = ReadShader(shaderFile);
 
@@ -55,25 +59,25 @@ GLuint ComputeShader::load(const char* shaderFile)
 		return 0;
 	}
 
-	GLCall(GLuint shader = glCreateShader(GL_COMPUTE_SHADER));
-	GLCall(glShaderSource(shader, 1, &source, NULL));
-	GLCall(glCompileShader(shader));
+	GLuint shader = glCreateShader(GL_COMPUTE_SHADER);
+	glShaderSource(shader, 1, &source, NULL);
+	glCompileShader(shader);
 
 	int compileResult;
-	GLCall(glGetShaderiv(shader, GL_COMPILE_STATUS, &compileResult));
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &compileResult);
 	if (compileResult == GL_FALSE)
 	{
 		std::cout << "Shader: \"" << shaderFile << "\" compile failed." << std::endl;
 	}
 
-	GLCall(glAttachShader(program, shader));
+	glAttachShader(program, shader);
 
-	delete[] source;	
+	delete[] source;
 
-	GLCall(glLinkProgram(program));
+	glLinkProgram(program);
 
 	GLint linkResult;
-	GLCall(glGetProgramiv(program, GL_LINK_STATUS, &linkResult));
+	glGetProgramiv(program, GL_LINK_STATUS, &linkResult);
 	if (!linkResult)
 	{
 		if (linkResult == GL_FALSE)
@@ -89,18 +93,17 @@ GLuint ComputeShader::load(const char* shaderFile)
 
 void ComputeShader::use() const
 {
-	GLCall(glUseProgram(program));
+	glUseProgram(program);
 }
 
 void ComputeShader::compute(unsigned int particleAmount /* = -1 */)
 {
 	if (particleAmount == -1)
 	{
-		GLCall(glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ));
+		glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ);
 	}
 	else
 	{
-		GLCall(glDispatchCompute(std::floor(particleAmount / 256.0) + 1, 1, 1));
+		glDispatchCompute(std::floor(particleAmount / 256.0) + 1, 1, 1);
 	}
-
 }

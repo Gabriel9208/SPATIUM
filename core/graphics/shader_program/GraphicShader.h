@@ -1,6 +1,5 @@
 #pragma once
 #include "ShaderProgram.h"
-#include <string>
 #include <glad/glad.h>
 
 
@@ -8,7 +7,7 @@ class GraphicShader: public ShaderProgram
 {
 public:
 	GraphicShader() : ShaderProgram() {}
-	~GraphicShader();
+	~GraphicShader() override = default;
 
 	GLuint load(ShaderInfo* shaders) override;
 

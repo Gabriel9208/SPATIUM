@@ -5,16 +5,17 @@
 class ComputeShader: public ShaderProgram
 {
 private:
-	unsigned int numGroupsX;
-	unsigned int numGroupsY;
-	unsigned int numGroupsZ; 
+	unsigned int numGroupsX = 0;
+	unsigned int numGroupsY = 0;
+	unsigned int numGroupsZ = 0;
 
-	const GLchar* ReadShader(const char* filename);
 
 public:
 	ComputeShader(): ShaderProgram() {}
 	ComputeShader(const char* shaderFile, unsigned int x, unsigned int y, unsigned int z);
-	~ComputeShader() {}
+	~ComputeShader() override = default;
+
+	const GLchar* ReadShader(const char* filename) override;
 
 	void setGroupAmount(unsigned int x, unsigned int y, unsigned int z);
 	GLuint load(const char* shaderFile) override;

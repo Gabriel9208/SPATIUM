@@ -1,13 +1,11 @@
 #pragma once
 
 #include <glad/glad.h>
-#include <vector>
-#include <glm/glm.hpp>
 
 class FBO
 {
 private:
-	GLuint id;
+	GLuint id = 0;
 
 public:
 	FBO();
@@ -21,6 +19,6 @@ public:
 
 
 	void bind() const;
-	void unbind() const;
-	void copy(const FBO& other, int width, int height);
+	static void unbind() ;
+	void copy(const FBO& other, int width, int height) const;
 };

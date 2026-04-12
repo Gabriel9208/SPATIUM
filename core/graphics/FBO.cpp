@@ -1,13 +1,12 @@
 #include "FBO.h"
-#include "../Utilty/Error.h"
 
 #include <glad/glad.h>
 
 
 FBO::FBO()
 {
-	GLCall(glGenFramebuffers(1, &id));
-	//GLCall(glBindFramebuffer(GL_FRAMEBUFFER, id));
+	glGenFramebuffers(1, &id);
+	//glBindFramebuffer(GL_FRAMEBUFFER, id);
 }
 
 FBO::FBO(FBO&& other) noexcept : id(other.id)
@@ -17,7 +16,7 @@ FBO::FBO(FBO&& other) noexcept : id(other.id)
 
 FBO::~FBO()
 {
-	GLCall(glDeleteFramebuffers(1, &id));
+	glDeleteFramebuffers(1, &id);
 }
 
 FBO& FBO::operator=(FBO&& other) noexcept
@@ -26,7 +25,7 @@ FBO& FBO::operator=(FBO&& other) noexcept
 	{
 		if (id != 0)
 		{
-			GLCall(glDeleteFramebuffers(1, &id));
+			glDeleteFramebuffers(1, &id);
 		}
 
 		id = other.id;
@@ -38,10 +37,10 @@ FBO& FBO::operator=(FBO&& other) noexcept
 
 void FBO::bind() const
 {
-	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, id));
+	glBindFramebuffer(GL_FRAMEBUFFER, id);
 }
 
-void FBO::copy(const FBO& other, int width, int height)
+void FBO::copy(const FBO& other, const int width, const int height) const
 {
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, other.id);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, id);
@@ -49,7 +48,7 @@ void FBO::copy(const FBO& other, int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void FBO::unbind() const
+void FBO::unbind()
 {
-	GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

@@ -1,19 +1,19 @@
 #include "ShaderProgram.h"
-#include "../../Utilty/Error.h"
+
+#include <cstring>
 
 #include <fstream>
-#include <sstream>
 #include <iostream>
 
 ShaderProgram::~ShaderProgram()
 {
 	std::cout << "Program " << program << " has been deleted.\n";
-	GLCall(glDeleteProgram(program));
+	glDeleteProgram(program);
 }
 
-void ShaderProgram::unUse() const
+void ShaderProgram::unUse()
 {
-	GLCall(glUseProgram(0));
+	glUseProgram(0);
 }
 
 const GLchar* ShaderProgram::ReadShader(const char* filename)
@@ -36,25 +36,26 @@ const GLchar* ShaderProgram::ReadShader(const char* filename)
 	GLchar* shaderSource = originalBuffer;
 	int newLength = length;
 
-	if (length >= 3 && 
+	if (length >= 3 &&
 	    static_cast<unsigned char>(shaderSource[0]) == 0xEF &&
 	    static_cast<unsigned char>(shaderSource[1]) == 0xBB &&
-	    static_cast<unsigned char>(shaderSource[2]) == 0xBF) 
+	    static_cast<unsigned char>(shaderSource[2]) == 0xBF)
 	{
 		shaderSource += 3;
 		newLength -= 3;
 		std::cout << "Note: Stripped UTF-8 BOM from shader: " << filename << std::endl;
 	}
 
-	if (newLength != length) {
-	    GLchar* cleanSource = new GLchar[newLength + 1];
-	    memcpy(cleanSource, shaderSource, newLength);
-	    cleanSource[newLength] = '\0';
-	    delete[] originalBuffer;
-	    return cleanSource;
+	if (newLength != length)
+	{
+		auto* cleanSource = new GLchar[newLength + 1];
+		memcpy(cleanSource, shaderSource, newLength);
+		cleanSource[newLength] = '\0';
+		delete[] originalBuffer;
+		return cleanSource;
 	}
-    else {
-        originalBuffer[newLength] = '\0';
-        return originalBuffer;
-    }
+
+	originalBuffer[newLength] = '\0';
+	return originalBuffer;
+
 }
