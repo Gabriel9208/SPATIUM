@@ -7,12 +7,12 @@
 class VAO : public IGPUResource
 {
 private:
-	GLuint id = 0;
+	GLuint id_ = 0;
 
 public:
 	VAO();
 	VAO(VAO&& other) noexcept : 
-		id(std::exchange(other.id, 0))
+		id_(std::exchange(other.id_, 0))
 		{}
 	VAO(const VAO& other) = delete;
 	~VAO() override;

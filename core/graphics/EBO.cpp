@@ -1,23 +1,23 @@
 #include "EBO.h"
 
-EBO::EBO() : BufferObject(), count( 0 )
+EBO::EBO() : BufferObject(), count_( 0 )
 {
-	glCreateBuffers( 1, &id );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id );
+	glCreateBuffers( 1, &id_ );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id_ );
 }
 
 EBO::EBO( const std::vector<unsigned int>& v )
 {
-	glCreateBuffers( 1, &id );
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id );
+	glCreateBuffers( 1, &id_ );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id_ );
 	glBufferData( GL_ELEMENT_ARRAY_BUFFER, v.size() * sizeof(unsigned int), &v[0], GL_STATIC_DRAW );
-	count = v.size();
+	count_ = v.size();
 }
 
 EBO::~EBO()
 {
-	if ( id != 0 ) {
-		glDeleteBuffers( 1, &id );
+	if ( id_ != 0 ) {
+		glDeleteBuffers( 1, &id_ );
 	}
 }
 
@@ -25,14 +25,14 @@ EBO& EBO::operator=( EBO&& other ) noexcept
 {
 	if ( this != &other )
 	{
-		if ( id != 0 )
+		if ( id_ != 0 )
 		{
-			glDeleteBuffers( 1, &id );
+			glDeleteBuffers( 1, &id_ );
 		}
 
-		count = other.count;
+		count_ = other.count_;
 
-		std::exchange( other.id, 0 );
+		std::exchange( other.id_, 0 );
 	}
 
 	return *this;
@@ -49,12 +49,12 @@ void EBO::initialize( const std::vector<unsigned int>& v )
 {
 	bind();
 	glBufferData( GL_ELEMENT_ARRAY_BUFFER, v.size() * sizeof(unsigned int), &v[0], GL_STATIC_DRAW );
-	count = v.size();
+	count_ = v.size();
 }
 
 void EBO::bind() const
 {
-	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id );
+	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, id_ );
 }
 
 void EBO::unbind() const

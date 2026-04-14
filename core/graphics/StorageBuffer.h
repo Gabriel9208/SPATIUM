@@ -9,7 +9,7 @@ template<class T>
 class StorageBuffer: public BufferObject
 {
 protected:
-	unsigned int size = 0;
+	unsigned int size_ = 0;
 
 public:
 	StorageBuffer() : BufferObject() {}
@@ -34,8 +34,8 @@ public:
 
 	static void copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
 
-	[[nodiscard]] inline unsigned int getSize() const { return size; }
-	[[nodiscard]] inline unsigned int getId() const { return id; }
+	[[nodiscard]] inline unsigned int getSize() const { return size_; }
+	[[nodiscard]] inline unsigned int getId() const { return id_; }
 };
 
 template< typename T >
@@ -52,5 +52,5 @@ void StorageBuffer<T>::copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLi
 template<class T>
 void StorageBuffer<T>::invalid() const
 {
-	glInvalidateBufferData(id);
+	glInvalidateBufferData(id_);
 }

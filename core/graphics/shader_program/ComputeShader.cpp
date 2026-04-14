@@ -29,18 +29,18 @@ const GLchar* ComputeShader::read_shader(const char* filename)
 }
 
 ComputeShader::ComputeShader(const char* shaderFile, unsigned int x, unsigned int y, unsigned int z):
-	numGroupsX(x),
-	numGroupsY(y),
-	numGroupsZ(z)
+	numGroupsX_(x),
+	numGroupsY_(y),
+	numGroupsZ_(z)
 {
 	load(shaderFile);
 }
 
 void ComputeShader::set_group_amount(unsigned int x, unsigned int y, unsigned int z)
 {
-	numGroupsX = x;
-	numGroupsY = y;
-	numGroupsZ = z;
+	numGroupsX_ = x;
+	numGroupsY_ = y;
+	numGroupsZ_ = z;
 }
 
 GLuint ComputeShader::load(const char* shaderFile)
@@ -100,7 +100,7 @@ void ComputeShader::compute(unsigned int particleAmount /* = -1 */)
 {
 	if (particleAmount == -1)
 	{
-		glDispatchCompute(numGroupsX, numGroupsY, numGroupsZ);
+		glDispatchCompute(numGroupsX_, numGroupsY_, numGroupsZ_);
 	}
 	else
 	{

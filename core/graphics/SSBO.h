@@ -12,11 +12,11 @@ template<class T>
 class SSBO : public StorageBuffer<T>
 {
 private:
-	unsigned int bindingPoint = 0;
+	unsigned int bindingPoint_ = 0;
 
 public:
 	SSBO() : StorageBuffer<T>() {}
-	explicit SSBO(unsigned int _bindingPoint) : StorageBuffer<T>(), bindingPoint(_bindingPoint) {}
+	explicit SSBO(unsigned int _bindingPoint) : StorageBuffer<T>(), bindingPoint_(_bindingPoint) {}
 	explicit SSBO(const std::vector<T>& v);
 
 	SSBO(SSBO&& other) noexcept;

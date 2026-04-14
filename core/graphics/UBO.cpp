@@ -10,7 +10,7 @@ UBO& UBO::operator=(UBO&& other) noexcept
 
 	if (this != &other)
 	{
-		std::exchange(other.size, 0);
+		std::exchange(other.size_, 0);
 		BufferObject::operator=(std::move(other));
 	}
 	return *this;
@@ -24,7 +24,7 @@ void UBO::associate(unsigned int program, const char* uniformBlockName, unsigned
 	glGetActiveUniformBlockiv(program, idx, GL_UNIFORM_BLOCK_DATA_SIZE, &UBOsize);
 
 	//bind UBO to its binding point
-	glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, id, 0, UBOsize);
+	glBindBufferRange(GL_UNIFORM_BUFFER, bindingPoint, id_, 0, UBOsize);
 
 	// get the uniform with index idx from the binding point bindingPoint
 	glUniformBlockBinding(program, idx, bindingPoint);
@@ -40,15 +40,15 @@ void UBO::fill_data(GLintptr offset, GLintptr size, const void* data) const
 
 void UBO::initialize(unsigned int _size)
 {
-	glGenBuffers(1, &id);
-	glBindBuffer(GL_UNIFORM_BUFFER, id);
+	glGenBuffers(1, &id_);
+	glBindBuffer(GL_UNIFORM_BUFFER, id_);
 	glBufferData(GL_UNIFORM_BUFFER, _size, 0, GL_DYNAMIC_DRAW);
-	size = _size;
+	size_ = _size;
 }
 
 void UBO::bind() const
 {
-	glBindBuffer(GL_UNIFORM_BUFFER, id);
+	glBindBuffer(GL_UNIFORM_BUFFER, id_);
 }
 
 void UBO::unbind() const

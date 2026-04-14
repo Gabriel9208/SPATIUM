@@ -5,9 +5,9 @@
 class ComputeShader: public ShaderProgram
 {
 private:
-	unsigned int numGroupsX = 0;
-	unsigned int numGroupsY = 0;
-	unsigned int numGroupsZ = 0;
+	unsigned int numGroupsX_ = 0;
+	unsigned int numGroupsY_ = 0;
+	unsigned int numGroupsZ_ = 0;
 
 
 public:

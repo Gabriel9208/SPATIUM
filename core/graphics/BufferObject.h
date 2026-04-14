@@ -9,21 +9,21 @@
 class BufferObject : public IGPUResource
 {
 protected:
-    GLuint id{0};
+    GLuint id_{0};
 
     explicit BufferObject() = default;
 
     BufferObject(BufferObject&& other) noexcept :
-        id(std::exchange(other.id, 0))
+        id_(std::exchange(other.id_, 0))
         {}
 
 public:
     BufferObject(const BufferObject& other) = delete;
     ~BufferObject() override
     {
-        if (id != 0)
+        if (id_ != 0)
         {
-            glDeleteBuffers(1, &id);
+            glDeleteBuffers(1, &id_);
         }
     }
 
@@ -31,11 +31,11 @@ public:
     {
         if (this != &other)
         {
-            if (id != 0)
+            if (id_ != 0)
             {
-                glDeleteBuffers(1, &id);
+                glDeleteBuffers(1, &id_);
             }
-            std::exchange(other.id, 0);
+            std::exchange(other.id_, 0);
         }
 
         return *this;

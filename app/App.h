@@ -11,8 +11,8 @@ public:
     void run();
 
 private:
-    EventBus event_bus;  // must be declared before window
-    Window   window;
+    EventBus event_bus_;  // must be declared before window
+    Window   window_;
 
     void init_gl();
 };

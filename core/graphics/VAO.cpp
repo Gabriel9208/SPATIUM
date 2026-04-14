@@ -4,15 +4,15 @@
 
 VAO::VAO()
 {
-	glGenVertexArrays(1, &id);
-	glBindVertexArray(id);
+	glGenVertexArrays(1, &id_);
+	glBindVertexArray(id_);
 }
 
 VAO::~VAO()
 {
-	if (id != 0)
+	if (id_ != 0)
 	{
-		glDeleteVertexArrays(1, &id);
+		glDeleteVertexArrays(1, &id_);
 	}
 }
 
@@ -20,12 +20,12 @@ VAO& VAO::operator=(VAO&& other) noexcept
 {
 	if (this != &other)
 	{
-		if (id != 0)
+		if (id_ != 0)
 		{
-			glDeleteVertexArrays(1, &id);
+			glDeleteVertexArrays(1, &id_);
 		}
 
-		std::exchange(other.id, 0);
+		std::exchange(other.id_, 0);
 	}
 
 	return *this;
@@ -33,7 +33,7 @@ VAO& VAO::operator=(VAO&& other) noexcept
 
 void VAO::bind() const
 {
-	glBindVertexArray(id);
+	glBindVertexArray(id_);
 }
 
 void VAO::unbind() const

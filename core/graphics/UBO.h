@@ -7,13 +7,13 @@
 class UBO: public BufferObject
 {
 private:
-	unsigned int size = 0;
+	unsigned int size_ = 0;
 
 public:
 	UBO() : BufferObject() {}
 	explicit UBO(unsigned int _size);
 	UBO(UBO&& other) noexcept:
-	BufferObject(std::move(other)), size(std::exchange(other.size, 0)) {}
+	BufferObject(std::move(other)), size_(std::exchange(other.size_, 0)) {}
 	UBO(const UBO& other) = delete;
 	~UBO() override = default;
 

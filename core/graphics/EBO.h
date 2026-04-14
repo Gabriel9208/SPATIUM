@@ -8,13 +8,13 @@
 class EBO: public BufferObject
 {
 private:
-	unsigned int count;
+	unsigned int count_;
 
 public:
 	EBO();
 	explicit EBO( const std::vector<unsigned int>& v );
 	EBO( EBO&& other ) noexcept:
-	BufferObject( std::move( other )), count( other.count )
+	BufferObject( std::move( other )), count_( other.count_ )
 	{}
 	~EBO() override;
 
@@ -28,6 +28,6 @@ public:
 
 	static void copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
 
-	[[nodiscard]] unsigned int get_count() const { return count; }
-	[[nodiscard]] GLuint get_id() const { return id; }
+	[[nodiscard]] unsigned int get_count() const { return count_; }
+	[[nodiscard]] GLuint get_id() const { return id_; }
 };
