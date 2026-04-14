@@ -15,9 +15,9 @@ public:
 	ComputeShader(const char* shaderFile, unsigned int x, unsigned int y, unsigned int z);
 	~ComputeShader() override = default;
 
-	const GLchar* ReadShader(const char* filename) override;
+	const GLchar* read_shader(const char* filename) override;
 
-	void setGroupAmount(unsigned int x, unsigned int y, unsigned int z);
+	void set_group_amount(unsigned int x, unsigned int y, unsigned int z);
 	GLuint load(const char* shaderFile) override;
 
 	void use() const override;

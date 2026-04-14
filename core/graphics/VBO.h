@@ -24,7 +24,7 @@ public:
 
 	void bind() const override;
 	void unbind() const override;
-	void setData(const std::vector<T>& v, GLuint usageMode);
+	void set_data(const std::vector<T>& v, GLuint usageMode);
 };
 
 template<class T>
@@ -85,7 +85,7 @@ void VBO<T>::unbind() const
 }
 
 template<class T>
-inline void VBO<T>::setData(const std::vector<T>& v, GLuint usageMode)
+inline void VBO<T>::set_data(const std::vector<T>& v, GLuint usageMode)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, this->id);
 	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(T), v.data(), usageMode);

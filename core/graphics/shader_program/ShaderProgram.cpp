@@ -11,12 +11,12 @@ ShaderProgram::~ShaderProgram()
 	glDeleteProgram(program);
 }
 
-void ShaderProgram::unUse()
+void ShaderProgram::unuse()
 {
 	glUseProgram(0);
 }
 
-const GLchar* ShaderProgram::ReadShader(const char* filename)
+const GLchar* ShaderProgram::read_shader(const char* filename)
 {
 	FILE* in = fopen(filename, "rb");
 

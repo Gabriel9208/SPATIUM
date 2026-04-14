@@ -16,13 +16,13 @@ public:
 	ShaderProgram(): program(0) {}
 	virtual ~ShaderProgram();
 
-	virtual const GLchar* ReadShader(const char* filename);
+	virtual const GLchar* read_shader(const char* filename);
 	
 	virtual GLuint load(ShaderInfo* shaders) = 0;
 	virtual GLuint load(const char* shaderFile) = 0;
 
 	virtual void use() const = 0;
-	static void unUse() ;
+	static void unuse() ;
 
-	[[nodiscard]] inline unsigned int getId() const { return program; }
+	[[nodiscard]] inline unsigned int get_id() const { return program; }
 };

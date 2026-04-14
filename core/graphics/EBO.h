@@ -26,8 +26,8 @@ public:
 	void bind() const override;
 	void unbind() const override;
 
-	static void copyAndWrite(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
+	static void copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
 
-	[[nodiscard]] unsigned int getCount() const { return count; }
-	[[nodiscard]] GLuint getId() const { return id; }
+	[[nodiscard]] unsigned int get_count() const { return count; }
+	[[nodiscard]] GLuint get_id() const { return id; }
 };

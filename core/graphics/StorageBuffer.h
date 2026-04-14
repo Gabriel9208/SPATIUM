@@ -32,14 +32,14 @@ public:
 
 	void invalid() const;
 
-	static void copyAndWrite(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
+	static void copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size);
 
 	[[nodiscard]] inline unsigned int getSize() const { return size; }
 	[[nodiscard]] inline unsigned int getId() const { return id; }
 };
 
 template< typename T >
-void StorageBuffer<T>::copyAndWrite(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size)
+void StorageBuffer<T>::copy_and_write(GLuint readBuffer, GLuint writeBuffer, GLintptr readOffset, GLintptr writeOffset, unsigned int size)
 {
 	glBindBuffer(GL_COPY_WRITE_BUFFER, writeBuffer);
 	glBindBuffer(GL_COPY_READ_BUFFER, readBuffer);

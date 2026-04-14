@@ -62,7 +62,7 @@ void EBO::unbind() const
 	glBindBuffer( GL_ELEMENT_ARRAY_BUFFER, 0 );
 }
 
-void EBO::copyAndWrite(
+void EBO::copy_and_write(
  const GLuint readBuffer,
  const GLuint writeBuffer,
  const GLintptr readOffset,

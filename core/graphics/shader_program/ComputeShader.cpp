@@ -5,7 +5,7 @@
 
 #include <iostream>
 
-const GLchar* ComputeShader::ReadShader(const char* filename)
+const GLchar* ComputeShader::read_shader(const char* filename)
 {
 	FILE* in = fopen(filename, "rb");
 
@@ -36,7 +36,7 @@ ComputeShader::ComputeShader(const char* shaderFile, unsigned int x, unsigned in
 	load(shaderFile);
 }
 
-void ComputeShader::setGroupAmount(unsigned int x, unsigned int y, unsigned int z)
+void ComputeShader::set_group_amount(unsigned int x, unsigned int y, unsigned int z)
 {
 	numGroupsX = x;
 	numGroupsY = y;
@@ -52,7 +52,7 @@ GLuint ComputeShader::load(const char* shaderFile)
 
 	program = glCreateProgram();
 
-	const GLchar* source = ReadShader(shaderFile);
+	const GLchar* source = read_shader(shaderFile);
 
 	if (source == NULL)
 	{

@@ -20,8 +20,9 @@ public:
 	UBO& operator=(const UBO& other) = delete;
 	UBO& operator=(UBO&& other) noexcept;
 
-	void associateWithShaderBlock(unsigned int program, const char* uniformBlockName, unsigned int bindingPoint) const;
-	void fillInData(GLintptr offset, GLintptr size, const void* data) const;
+	// associate_with_shader_block
+	void associate(unsigned int program, const char* uniformBlockName, unsigned int bindingPoint) const;
+	void fill_data(GLintptr offset, GLintptr size, const void* data) const;
 
 	void initialize(unsigned int _size);
 	void bind() const override;

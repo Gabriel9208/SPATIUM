@@ -4,10 +4,6 @@
 #include <iostream>
 #include <vector>
 
-GraphicShader::~GraphicShader()
-{
-}
-
 void GraphicShader::use() const
 {
 	glUseProgram(program);
@@ -25,7 +21,7 @@ GLuint GraphicShader::load(ShaderInfo* shaders)
 	ShaderInfo* shaderInfo = shaders;
 	while (shaderInfo->type != GL_NONE)
 	{
-		const GLchar* source = ReadShader(shaderInfo->filename);
+		const GLchar* source = read_shader(shaderInfo->filename);
 
 		if (source == NULL)
 		{

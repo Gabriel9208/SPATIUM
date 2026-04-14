@@ -16,7 +16,7 @@ UBO& UBO::operator=(UBO&& other) noexcept
 	return *this;
 }
 
-void UBO::associateWithShaderBlock(unsigned int program, const char* uniformBlockName, unsigned int bindingPoint) const
+void UBO::associate(unsigned int program, const char* uniformBlockName, unsigned int bindingPoint) const
 {
 	int UBOsize = 0;
 	int idx = glGetUniformBlockIndex(program, uniformBlockName);
@@ -30,7 +30,7 @@ void UBO::associateWithShaderBlock(unsigned int program, const char* uniformBloc
 	glUniformBlockBinding(program, idx, bindingPoint);
 }
 
-void UBO::fillInData(GLintptr offset, GLintptr size, const void* data) const
+void UBO::fill_data(GLintptr offset, GLintptr size, const void* data) const
 {
 	bind();
 	glBufferSubData(GL_UNIFORM_BUFFER, offset, size, data);

@@ -21,6 +21,14 @@ set(CORE_SOURCES
         core/graphics/interfaces/IGPUResource.h
         core/graphics/VBO.h
         core/graphics/SSBO.h
+        core/window/Window.h
+        core/window/Window.cpp
+        app/GlfwContext.h
+        core/event/EventID.h
+        core/event/EventBus.h
+        core/event/events.h
+        app/App.h
+        app/App.cpp
 )
 
 add_executable(SPATIUM
