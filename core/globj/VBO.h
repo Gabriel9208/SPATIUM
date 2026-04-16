@@ -51,8 +51,8 @@ VBO<T>& VBO<T>::operator=(VBO<T>&& other) noexcept
 template<class T>
 void VBO<T>::initialize(unsigned int _size, const GLuint usageMode)
 {
-	glGenBuffers(1, &this->id);
-	glBindBuffer(GL_ARRAY_BUFFER, this->id);
+	glGenBuffers(1, &this->id_);
+	glBindBuffer(GL_ARRAY_BUFFER, this->id_);
 	glBufferData(GL_ARRAY_BUFFER, _size, nullptr, usageMode);
 	this->size = _size;
 }
@@ -66,8 +66,8 @@ void VBO<T>::initialize(const std::vector<T>& v, const GLuint usageMode)
 		return;
 	}
 
-	glGenBuffers(1, &this->id);
-	glBindBuffer(GL_ARRAY_BUFFER, this->id);
+	glGenBuffers(1, &this->id_);
+	glBindBuffer(GL_ARRAY_BUFFER, this->id_);
 	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(T), v.data(), usageMode);
 	this->size = v.size();
 }
@@ -75,7 +75,7 @@ void VBO<T>::initialize(const std::vector<T>& v, const GLuint usageMode)
 template<class T>
 void VBO<T>::bind() const
 {
-	glBindBuffer(GL_ARRAY_BUFFER, this->id);
+	glBindBuffer(GL_ARRAY_BUFFER, this->id_);
 }
 
 template<class T>
@@ -87,7 +87,7 @@ void VBO<T>::unbind() const
 template<class T>
 void VBO<T>::set_data(const std::vector<T>& v, GLuint usageMode)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, this->id);
+	glBindBuffer(GL_ARRAY_BUFFER, this->id_);
 	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(T), v.data(), usageMode);
 	this->size = v.size();
 }

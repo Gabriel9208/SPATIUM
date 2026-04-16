@@ -32,6 +32,30 @@ void App::run()
 
         // TODO: render
 
+        std::vector<float> v = {
+            -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+             1.0f, -1.0f, 0.0f,  1.0f, 0.0f,
+             1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+
+            -1.0f, -1.0f, 0.0f,  0.0f, 0.0f,
+             1.0f,  1.0f, 0.0f,  1.0f, 1.0f,
+            -1.0f,  1.0f, 0.0f,  0.0f, 1.0f
+        };
+
+        VAO vao;
+        VBO<float> vbo(v, GL_STATIC_DRAW);
+
+        vao.bind(); // Assuming this VAO is dedicated to the test quad
+
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 5, 0);                         // aPos (vec3)
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 5, (void*)(sizeof(float) * 3)); // aTexCoord (vec2)
+
+
+        // Unbind VAO to avoid accidental modification by loadScene() if it uses VAO 0
+        glBindVertexArray(0);
         window_.swap_buffers();
     }
 }
