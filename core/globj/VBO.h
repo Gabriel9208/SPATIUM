@@ -5,14 +5,14 @@
 #include <iostream>
 
 #include "StorageBuffer.h"
-#include "core/graphics/BufferObject.h"
+#include "core/globj/BufferObject.h"
 
 template<class T>
 class VBO: public StorageBuffer<T>
 {
 public:
 	VBO() : StorageBuffer<T>() {}
-	explicit VBO(const std::vector<T>& v);
+	explicit VBO(const std::vector<T>& v, GLuint usageMode);
 
 	VBO(VBO&& other) noexcept;
 	~VBO() override = default;
@@ -28,9 +28,9 @@ public:
 };
 
 template<class T>
-VBO<T>::VBO(const std::vector<T>& v): StorageBuffer<T>()
+VBO<T>::VBO(const std::vector<T>& v, const GLuint usageMode): StorageBuffer<T>()
 {
-	initialize(v);
+	VBO<T>::initialize(v, usageMode);
 }
 
 template<class T>
@@ -53,14 +53,14 @@ void VBO<T>::initialize(unsigned int _size, const GLuint usageMode)
 {
 	glGenBuffers(1, &this->id);
 	glBindBuffer(GL_ARRAY_BUFFER, this->id);
-	glBufferData(GL_ARRAY_BUFFER, _size, NULL, usageMode);
+	glBufferData(GL_ARRAY_BUFFER, _size, nullptr, usageMode);
 	this->size = _size;
 }
 
 template<class T>
 void VBO<T>::initialize(const std::vector<T>& v, const GLuint usageMode)
 {
-	if (v.size() == 0)
+	if (v.empty())
 	{
 		std::cout << "VBO initialization fails: Empty vector." << std::endl;
 		return;
@@ -85,7 +85,7 @@ void VBO<T>::unbind() const
 }
 
 template<class T>
-inline void VBO<T>::set_data(const std::vector<T>& v, GLuint usageMode)
+void VBO<T>::set_data(const std::vector<T>& v, GLuint usageMode)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, this->id);
 	glBufferData(GL_ARRAY_BUFFER, v.size() * sizeof(T), v.data(), usageMode);

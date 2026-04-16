@@ -20,7 +20,7 @@ public:
 	{
 		if (this != &other)
 		{
-			std::exchange(other.size, 0);
+			std::exchange(other.size_, 0);
 			BufferObject::operator=(std::move(other));
 		}
 

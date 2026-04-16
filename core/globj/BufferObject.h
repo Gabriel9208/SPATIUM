@@ -4,7 +4,7 @@
 
 #include <glad/glad.h>
 
-#include "core/graphics/interfaces/IGPUResource.h"
+#include "core/globj/interfaces/IGPUResource.h"
 
 class BufferObject : public IGPUResource
 {

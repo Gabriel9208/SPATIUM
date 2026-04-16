@@ -1,5 +1,9 @@
-#include "App.h"
+#include <glad/glad.h>
 
+#include "App.h"
+#include "core/globj/debug/Debug.h"
+#include "core/globj/VAO.h"
+#include "core/globj/VBO.h"
 App::App()
     : GlfwContext(),
       event_bus_(),
@@ -19,16 +23,21 @@ App::App()
     });
 }
 
-void App::run() {
+void App::run()
+{
     while (!window_.should_close()) {
         glfwPollEvents();
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+
         // TODO: render
+
         window_.swap_buffers();
     }
 }
 
 void App::init_gl() {
+    Debug::enable();
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
