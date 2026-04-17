@@ -5,8 +5,8 @@
 
 #include <glad/glad.h>
 
-#include "StorageBuffer.h"
-#include "core/globj/BufferObject.h"
+#include "../StorageBuffer.h"
+#include "BufferObject.h"
 
 template<class T>
 class SSBO : public StorageBuffer<T>

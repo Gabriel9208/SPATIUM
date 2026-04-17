@@ -6,7 +6,7 @@
 class GraphicShader: public ShaderProgram
 {
 public:
-	GraphicShader() : ShaderProgram() {}
+	GraphicShader(): ShaderProgram() {}
 	~GraphicShader() override = default;
 
 	GLuint load(ShaderInfo* shaders) override;

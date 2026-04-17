@@ -11,7 +11,7 @@ const GLchar* ComputeShader::read_shader(const char* filename)
 
 	if (!in) {
 		std::cout << "Shader file: " << filename << " cannot be opened." << std::endl;
-		return NULL;
+		return nullptr;
 	}
 
 	fseek(in, 0, SEEK_END);

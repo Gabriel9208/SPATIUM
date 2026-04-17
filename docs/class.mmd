@@ -1,0 +1,285 @@
+classDiagram
+
+    class GlfwContext {
+        +GlfwContext()
+        +~GlfwContext()
+    }
+
+    class Debug {
+        +enable()$ void
+        -glDebugSourceStr(source: GLenum)$ std::string_view
+        -glDebugTypeStr(type: GLenum)$ std::string_view
+        -glDebugSeverityStr(severity: GLenum)$ std::string_view
+        -MessageCallback(source: GLenum, type: GLenum, id: GLuint, severity: GLenum, length: GLsizei, message: const GLchar*, userParam: const void*)$ void
+    }
+
+    class App {
+        -event_bus_: EventBus
+        -window_: Window
+        -camera_: Camera
+        -cam_controller_: CameraController
+        -mesh_manager_: MeshManager
+        -scene_: Scene
+        -renderer_: Renderer
+        -shader_: unique_ptr~GraphicShader~
+        +App()
+        +run() void
+        -init_gl() void
+    }
+
+    class EventBus {
+        -listeners_: unordered_map~int, vector~function~~
+        +subscribe~T~(listener: function~void(const T&)~) void
+        +emit~T~(event: const T&) void
+    }
+
+    class EventID {
+        -counter: int$
+        +get~T~()$ int
+    }
+
+    class Window {
+        -handle_: GLFWwindow*
+        -title_: string
+        -width_: int
+        -height_: int
+        -resize_callback_: function~void(int, int)~
+        -key_callback_: function~void(const KeyEvent&)~
+        -mouse_move_callback_: function~void(const MouseMoveEvent&)~
+        -click_callback_: function~void(const MouseClickEvent&)~
+        -scroll_callback_: function~void(const ScrollEvent&)~
+        +Window(width: int, height: int, title: string, vsync: bool)
+        +should_close() bool
+        +swap_buffers() void
+        +make_context_current() void
+        +get_width() int
+        +get_height() int
+        +get_aspect_ratio() float
+        +set_resize_callback(cbf: function~void(int, int)~) void
+        +set_key_callback(cb: function~void(const KeyEvent&)~) void
+        +set_mouse_move_callback(cb: function~void(const MouseMoveEvent&)~) void
+        +set_click_callback(cb: function~void(const MouseClickEvent&)~) void
+        +set_scroll_callback(cb: function~void(const ScrollEvent&)~) void
+    }
+
+    class Camera {
+        -position_: glm::vec3
+        -orientation_: glm::quat
+        -focus_distance_: float
+        -fov_deg_: float
+        -aspect_: float
+        -near_: float
+        -far_: float
+        -mode_: ProjectionMode
+        +Camera(eye: vec3, center: vec3, up: vec3, fov_deg: float, aspect: float, near_plane: float, far_plane: float)
+        +move_left(amount: float) void
+        +move_right(amount: float) void
+        +move_up(amount: float) void
+        +move_down(amount: float) void
+        +move_forward(amount: float) void
+        +move_backward(amount: float) void
+        +turn_left(angle_rad: float) void
+        +turn_right(angle_rad: float) void
+        +turn_up(angle_rad: float) void
+        +turn_down(angle_rad: float) void
+        +set_aspect(aspect: float) void
+        +set_projection_mode(mode: ProjectionMode) void
+        +get_projection_mode() ProjectionMode
+        +get_view() const glm::mat4&
+        +get_projection() const glm::mat4&
+        +position() glm::vec3
+        +forward() glm::vec3
+        +right() glm::vec3
+        +local_up() glm::vec3
+    }
+
+    class CameraController {
+        -camera_: Camera* = nullptr
+        -translate_speed_: float
+        -rotate_speed_: float
+        -zoom_speed_: float
+        -rotating_: bool
+        +CameraController()
+        +CameraController(camera: Camera&)
+        +bind_camera(cam: Camera&) void
+        +on_key(e: const KeyEvent&) void
+        +on_mouse_move(e: const MouseMoveEvent&) void
+        +on_click(e: const MouseClickEvent&) void
+        +on_scroll(e: const ScrollEvent&) void
+    }
+
+    class ProjectionMode {
+        <<enumeration>>
+        kPerspective
+        kOrthogonal
+    }
+
+    class MeshManager {
+        -meshes_: unordered_map~int, Mesh~
+        -ids_: unordered_map~string, int~
+        -names_: unordered_map~int, string~
+        -next_id_: int
+        +MeshManager()
+        +load_mesh(filename: string, name: optional~string~) int
+        +create_mesh(name: string, vertices: vector~Vertex~, indices: vector~GLuint~) int
+        +get_by_id(id: int) Mesh&
+        +get_by_name(name: string) Mesh&
+        +contains(id: int) bool
+        +contains(name: string) bool
+    }
+
+    class Mesh {
+        -id_: int
+        -name_: string
+        -vao_: VAO
+        -vbo_: VBO~Vertex~
+        -ebo_: EBO
+        -index_count_: size_t
+        +Mesh(id: int, name: string, vao: VAO, vbo: VBO~Vertex~, ebo: EBO, index_count: size_t)
+        +get_id() int
+        +get_name() const string&
+        +get_index_count() size_t
+        +bind() void
+    }
+
+    class Vertex {
+        <<struct>>
+        +position: vec3
+        +normal: vec3
+    }
+
+    class Scene {
+        -meshes_: vector~Mesh*~
+        +Scene()
+        +Scene(mesh: Mesh&)
+        +Scene(meshes: const vector~Mesh*~&)
+        +add_mesh(mesh: Mesh*) void
+        +begin() const_iterator
+        +end() const_iterator
+        +size() size_t
+    }
+
+    class Renderer {
+        +Renderer()
+        +clear() void
+        +draw(camera: const Camera&, mesh: const Mesh&, shader: const GraphicShader&) void
+        +draw(camera: const Camera&, scene: const Scene&, shader: const GraphicShader&) void
+        -upload_frame_uniforms_(camera: const Camera&, shader: const GraphicShader&) void
+        -upload_mesh_uniforms_(mesh: const Mesh&, shader: const GraphicShader&) void
+    }
+
+    class ShaderProgram {
+        #program: unsigned int
+        +ShaderProgram()
+        +get_id() unsigned int
+        +use()* void
+        +load(shaders: ShaderInfo*)* GLuint
+        +unuse()$ void
+    }
+
+    class GraphicShader {
+        +GraphicShader()
+        +load(shaders: ShaderInfo*) GLuint
+        +use() void
+    }
+
+    class KeyEvent {
+        <<struct>>
+        +key: Key
+        +action: KeyAction
+    }
+
+    class Key {
+        <<enumeration>>
+        kW
+        kA
+        kS
+        kD
+        kUp
+        kDown
+        kLeft
+        kRight
+    }
+
+    class KeyAction {
+        <<enumeration>>
+        kPress
+        kRelease
+        kRepeat
+    }
+
+    class MouseMoveEvent {
+        <<struct>>
+        +dx: double
+        +dy: double
+    }
+
+    class MouseClickEvent {
+        <<struct>>
+        +button: Button
+        +action: ClickAction
+        +x: double
+        +y: double
+    }
+
+    class Button {
+        <<enumeration>>
+        kLeft
+        kRight
+        kMiddle
+    }
+
+    class ClickAction {
+        <<enumeration>>
+        kPress
+        kRelease
+    }
+
+    class ScrollEvent {
+        <<struct>>
+        +dy: double
+    }
+
+    %% Relationships
+    App --|> GlfwContext
+    App *-- EventBus
+    App *-- Window
+    App *-- Camera
+    App *-- CameraController
+    App *-- MeshManager
+    App *-- Scene
+    App *-- Renderer
+    App *-- GraphicShader : shader_
+    App ..> Debug : use
+
+    EventBus --> EventID : uses
+
+    GraphicShader --|> ShaderProgram
+
+    MeshManager *-- Mesh
+    Scene --> Mesh
+
+    Mesh --> Vertex
+
+    Renderer ..> Scene : use
+    Renderer ..> Mesh : use
+    Renderer ..> Camera : use
+    Renderer ..> GraphicShader : use
+
+    Camera *-- ProjectionMode
+
+    CameraController ..> Camera : use
+    CameraController ..> KeyEvent : use
+    CameraController ..> MouseMoveEvent : use
+    CameraController ..> MouseClickEvent : use
+    CameraController ..> ScrollEvent : use
+
+    Window ..> KeyEvent : emit
+    Window ..> MouseMoveEvent : emit
+    Window ..> MouseClickEvent : emit
+    Window ..> ScrollEvent : emit
+
+    KeyEvent *-- Key
+    KeyEvent *-- KeyAction
+    MouseClickEvent *-- Button
+    MouseClickEvent *-- ClickAction

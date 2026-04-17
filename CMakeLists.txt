@@ -10,17 +10,17 @@ find_package(glm CONFIG REQUIRED)
 
 set(CORE_SOURCES
     core/glad.c
-        core/globj/EBO.cpp
-        core/globj/FBO.cpp
-        core/globj/UBO.cpp
-        core/globj/VAO.cpp
-        core/globj/shader_program/ShaderProgram.cpp
-        core/globj/shader_program/GraphicShader.cpp
-        core/globj/shader_program/ComputeShader.cpp
-        core/globj/BufferObject.h
-        core/globj/interfaces/IGPUResource.h
-        core/globj/VBO.h
-        core/globj/SSBO.h
+        core/gl/obj/EBO.cpp
+        core/gl/obj/FBO.cpp
+        core/gl/obj/UBO.cpp
+        core/gl/obj/VAO.cpp
+        core/gl/shader/ShaderProgram.cpp
+        core/gl/shader/GraphicShader.cpp
+        core/gl/shader/ComputeShader.cpp
+        core/gl/obj/BufferObject.h
+        core/gl/interfaces/IGPUResource.h
+        core/gl/obj/VBO.h
+        core/gl/obj/SSBO.h
         core/window/Window.h
         core/window/Window.cpp
         app/GlfwContext.h
@@ -29,8 +29,14 @@ set(CORE_SOURCES
         core/event/events.h
         app/App.h
         app/App.cpp
-        core/globj/debug/Debug.cpp
-        core/globj/debug/Debug.h
+        core/gl/debug/Debug.cpp
+        core/gl/debug/Debug.h
+        core/scene/Mesh.cpp
+        core/scene/MeshManager.cpp
+        core/scene/Scene.cpp
+        core/camera/Camera.cpp
+        core/camera/CameraController.cpp
+        core/render/Renderer.cpp
 )
 
 add_executable(SPATIUM

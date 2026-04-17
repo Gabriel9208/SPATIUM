@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "StorageBuffer.h"
-#include "core/globj/BufferObject.h"
+#include "BufferObject.h"
 
 template<class T>
 class VBO: public StorageBuffer<T>

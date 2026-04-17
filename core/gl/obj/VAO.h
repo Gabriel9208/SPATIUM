@@ -2,7 +2,7 @@
 #include <utility>
 #include <glad/glad.h>
 
-#include "interfaces/IGPUResource.h"
+#include "../interfaces/IGPUResource.h"
 
 class VAO : public IGPUResource
 {

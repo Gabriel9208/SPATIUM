@@ -23,7 +23,7 @@ GLuint GraphicShader::load(ShaderInfo* shaders)
 	{
 		const GLchar* source = read_shader(shaderInfo->filename);
 
-		if (source == NULL)
+		if (source == nullptr)
 		{
 			return 0;
 		}

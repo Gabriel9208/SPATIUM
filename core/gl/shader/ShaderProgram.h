@@ -18,8 +18,8 @@ public:
 
 	virtual const GLchar* read_shader(const char* filename);
 	
-	virtual GLuint load(ShaderInfo* shaders) = 0;
-	virtual GLuint load(const char* shaderFile) = 0;
+	virtual GLuint load(ShaderInfo* shaders) { return 0; }
+	virtual GLuint load(const char* shaderFile) { return 0; }
 
 	virtual void use() const = 0;
 	static void unuse() ;
